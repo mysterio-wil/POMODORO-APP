@@ -21,6 +21,7 @@
 * [Funcionalidades](#funcionalidades)
 * [Demostración](#demostración)
 * [Instalación y uso](#instalación-y-uso)
+* [Calidad del Código](#calidad-del-código)
 * [Tecnologías](#tecnologías)
 * [Autoría](#autoría)
 * [Licencia](#licencia)
@@ -61,6 +62,13 @@ npm run dev --prefix backend
 # Terminal 2: Iniciar el frontend
 npm run dev --prefix frontend
 ```
+
+##  Calidad del Código
+Este proyecto utiliza ESLint para el linting y Prettier para el formateo del código, asegurando la consistencia y calidad.
+
+### Scripts disponibles:
+- `npm run lint`: Ejecuta ESLint para identificar problemas de código.
+- `npm run format`: Formatea automáticamente el código usando Prettier.
 
 ##  Tecnologías utilizadas
 - **Backend**: Node.js, Express, TypeScript
