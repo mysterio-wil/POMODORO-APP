@@ -64,7 +64,7 @@ npm run dev --prefix frontend
 ```
 
 ##  Calidad del Código
-Este proyecto utiliza ESLint para el linting y Prettier para el formateo del código, asegurando la consistencia y calidad.
+Este proyecto utiliza ESLint (configurado en `eslint.config.js`) para el linting y Prettier para el formateo del código, asegurando la consistencia y calidad.
 
 ### Scripts disponibles:
 - `npm run lint`: Ejecuta ESLint para identificar problemas de código.
@@ -75,6 +75,17 @@ Para asegurar la calidad del código antes de cada commit, este proyecto utiliza
 
 - **Husky**: Configurado para ejecutar scripts en los hooks de Git.
 - **`lint-staged`**: Ejecuta automáticamente ESLint (`--fix`) y Prettier (`--write`) en los archivos que están en el área de preparación (`staged files`) antes de cada commit. Esto garantiza que solo el código formateado y sin errores de linting sea confirmado.
+
+### Pruebas (Vitest)
+Este proyecto utiliza Vitest para las pruebas unitarias y de integración en el frontend.
+
+- **Vitest**: Configurado para ejecutar pruebas en un entorno de navegador simulado (JSDOM).
+- **React Testing Library**: Utilizada para escribir pruebas que interactúan con los componentes de React de manera similar a como lo haría un usuario.
+
+Para ejecutar las pruebas, usa el siguiente comando desde el directorio `frontend`:
+```bash
+npm run test
+```
 
 ##  Tecnologías utilizadas
 - **Backend**: Node.js, Express, TypeScript
