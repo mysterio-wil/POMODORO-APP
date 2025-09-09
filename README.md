@@ -70,6 +70,12 @@ Este proyecto utiliza ESLint para el linting y Prettier para el formateo del có
 - `npm run lint`: Ejecuta ESLint para identificar problemas de código.
 - `npm run format`: Formatea automáticamente el código usando Prettier.
 
+### Hooks de Git (Husky + lint-staged)
+Para asegurar la calidad del código antes de cada commit, este proyecto utiliza Husky y `lint-staged`.
+
+- **Husky**: Configurado para ejecutar scripts en los hooks de Git.
+- **`lint-staged`**: Ejecuta automáticamente ESLint (`--fix`) y Prettier (`--write`) en los archivos que están en el área de preparación (`staged files`) antes de cada commit. Esto garantiza que solo el código formateado y sin errores de linting sea confirmado.
+
 ##  Tecnologías utilizadas
 - **Backend**: Node.js, Express, TypeScript
 - **Frontend**: React, Vite, TypeScript, Tailwind CSS
