@@ -1,17 +1,21 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
+import express from 'express'
+import cors from 'cors'
+import dotenv from 'dotenv'
+import { PrismaClient } from '@prisma/client'
 
-dotenv.config();
-const app = express();
-app.use(cors());
-app.use(express.json());
+dotenv.config()
+const app = express()
+const prisma = new PrismaClient()
 
-app.get("/api/health", (_req, res) => {
-  res.json({ ok: true, env: process.env.NODE_ENV || "dev" });
-});
+app.use(cors())
+app.use(express.json())
 
-const PORT = process.env.PORT || 4000;
+app.get('/api/health', async (_req, res) => {
+  const users = await prisma.user.findMany()
+  res.json({ ok: true, users })
+})
+
+const PORT = process.env.PORT || 4000
 app.listen(PORT, () => {
-  console.log(`Backend running on http://localhost:${PORT}`);
-});
+  console.log(`Backend running on http://localhost:${PORT}`)
+})

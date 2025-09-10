@@ -10,6 +10,8 @@
   <a href="https://nodejs.org/" target="_blank" rel="noreferrer noopener nofollow"><img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js"></a>
   <a href="https://expressjs.com/" target="_blank" rel="noreferrer noopener nofollow"><img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express"></a>
   <a href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer noopener nofollow"><img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript"></a>
+  <a href="https://www.postgresql.org/" target="_blank" rel="noreferrer noopener nofollow"><img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL"></a>
+  <a href="https://www.prisma.io/" target="_blank" rel="noreferrer noopener nofollow"><img src="https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white" alt="Prisma"></a>
   <a href="https://reactjs.org/" target="_blank" rel="noreferrer noopener nofollow"><img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React"></a>
   <a href="https://vitejs.dev/" target="_blank" rel="noreferrer noopener nofollow"><img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite"></a>
   <a href="https://tailwindcss.com/" target="_blank" rel="noreferrer noopener nofollow"><img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS"></a>
@@ -34,6 +36,7 @@ Una aplicación Pomodoro full-stack simple para ayudarte a gestionar tu tiempo y
 
 ##  Funcionalidades
 - **Backend API**: Servidor base con Express y TypeScript.
+- **Base de Datos**: Configuración con PostgreSQL y Prisma ORM.
 - **Frontend App**: Aplicación base con React, Vite y Tailwind CSS.
 - **Conexión**: Health check entre frontend y backend.
 
@@ -41,27 +44,56 @@ Una aplicación Pomodoro full-stack simple para ayudarte a gestionar tu tiempo y
 _(Aquí puedes agregar capturas de pantalla o GIFs de tu aplicación)_
 
 ##  Instalación y uso
-```bash
-# Clonar el repositorio
-# Reemplaza [YOUR_USERNAME] con tu usuario de GitHub
-git clone https://github.com/[YOUR_USERNAME]/pomodoro-app.git
 
-# Entrar al directorio
-cd pomodoro-app
+### Prerrequisitos
+- Node.js (v18 o superior)
+- npm
+- Git
+- PostgreSQL: Puedes instalarlo localmente o usar Docker.
 
-# Instalar dependencias
-npm install
-cd backend && npm install
-cd ../frontend && npm install
+### Pasos
 
-# Para ejecutar la aplicación, necesitarás dos terminales
+1.  **Clonar el repositorio**
+    ```bash
+    # Reemplaza [YOUR_USERNAME] con tu usuario de GitHub
+    git clone https://github.com/[YOUR_USERNAME]/pomodoro-app.git
+    cd pomodoro-app
+    ```
 
-# Terminal 1: Iniciar el backend
-npm run dev --prefix backend
+2.  **Instalar dependencias**
+    ```bash
+    # Instalar dependencias del root, backend y frontend
+    npm install
+    cd backend && npm install
+    cd ../frontend && npm install
+    cd .. 
+    ```
 
-# Terminal 2: Iniciar el frontend
-npm run dev --prefix frontend
-```
+3.  **Configurar la Base de Datos (Backend)**
+    - Navega a la carpeta `backend`.
+    - Crea un archivo `.env` en la raíz de la carpeta `backend`.
+    - Modifica la variable `DATABASE_URL` en el archivo `.env` con tus credenciales de PostgreSQL.
+      ```
+      DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/pomodoro?schema=public"
+      ```
+    - Si usas Docker, puedes iniciar un contenedor de Postgres con el comando que se proveyó en la guía de desarrollo.
+
+4.  **Aplicar las migraciones de la Base de Datos**
+    Asegúrate de estar en el directorio `backend`.
+    ```bash
+    npx prisma migrate dev
+    ```
+
+5.  **Ejecutar la aplicación**
+    Necesitarás dos terminales para ejecutar el backend y el frontend simultáneamente.
+
+    ```bash
+    # Terminal 1: Iniciar el backend (desde la raíz del proyecto)
+    npm run dev --prefix backend
+
+    # Terminal 2: Iniciar el frontend (desde la raíz del proyecto)
+    npm run dev --prefix frontend
+    ```
 
 ##  Calidad del Código
 Este proyecto utiliza ESLint (configurado en `eslint.config.js`) para el linting y Prettier para el formateo del código, asegurando la consistencia y calidad.
@@ -88,7 +120,7 @@ npm run test
 ```
 
 ##  Tecnologías utilizadas
-- **Backend**: Node.js, Express, TypeScript
+- **Backend**: Node.js, Express, TypeScript, PostgreSQL, Prisma
 - **Frontend**: React, Vite, TypeScript, Tailwind CSS
 
 ##  Autoría

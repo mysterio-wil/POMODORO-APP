@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Priority {
+  ALTA
+  MEDIA
+  BAJA
+}
+
+enum TaskStatus {
+  PENDING
+  IN_PROGRESS
+  DONE
+}
+
+model User {
+  id           Int          @id @default(autoincrement())
+  name         String
+  email        String       @unique
+  passwordHash String
+  tasks        Task[]
+  sessions     Session[]
+  statistics   Statistic[]
+  achievements Achievement[]
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
+model Task {
+  id          Int        @id @default(autoincrement())
+  title       String
+  description String?
+  priority    Priority   @default(MEDIA)
+  status      TaskStatus @default(PENDING)
+  user        User       @relation(fields: [userId], references: [id])
+  userId      Int
+  sessions    Session[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Session {
+  id        Int      @id @default(autoincrement())
+  startTime DateTime
+  endTime   DateTime?
+  duration  Int?
+  task      Task?    @relation(fields: [taskId], references: [id])
+  taskId    Int?
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  createdAt DateTime @default(now())
+}
+
+model Statistic {
+  id             Int      @id @default(autoincrement())
+  date           DateTime
+  totalSessions  Int      @default(0)
+  totalFocusTime Int      @default(0)
+  user           User     @relation(fields: [userId], references: [id])
+  userId         Int
+
+  @@unique([userId, date])
+}
+
+model Achievement {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  unlocked    Boolean  @default(false)
+  user        User     @relation(fields: [userId], references: [id])
+  userId      Int
+  unlockedAt  DateTime?
+}
