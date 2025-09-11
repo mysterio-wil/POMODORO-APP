@@ -36,6 +36,12 @@ Una aplicación Pomodoro full-stack simple para ayudarte a gestionar tu tiempo y
 
 ##  Funcionalidades
 - **Backend API**: Servidor base con Express y TypeScript.
+- **API de Tareas**: CRUD completo para la gestión de tareas.
+  - `GET /api/tasks`: Lista todas las tareas.
+  - `GET /api/tasks/:id`: Obtiene una tarea específica por su ID.
+  - `POST /api/tasks`: Crea una nueva tarea.
+  - `PATCH /api/tasks/:id`: Actualiza una tarea existente.
+  - `DELETE /api/tasks/:id`: Elimina una tarea.
 - **Base de Datos**: Configuración con PostgreSQL y Prisma ORM.
 - **Frontend App**: Aplicación base con React, Vite y Tailwind CSS.
 - **Conexión**: Health check entre frontend y backend.
