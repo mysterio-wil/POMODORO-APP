@@ -1,10 +1,10 @@
 import { Router } from 'express'
 import { PrismaClient } from '@prisma/client'
 import { z } from 'zod'
+import { AuthRequest } from '../middleware/auth'
 
 const startSessionSchema = z.object({
   taskId: z.number().optional(),
-  userId: z.number().optional(), // 🔒 luego lo reemplazaremos por JWT
 })
 
 const endSessionSchema = z.object({
@@ -15,13 +15,13 @@ export default function createSessionsRouter(prisma: PrismaClient) {
   const router = Router()
 
   // Iniciar sesión Pomodoro
-  router.post('/start', async (req, res) => {
+  router.post('/start', async (req: AuthRequest, res) => {
+    const userId = req.user!.id
     const parsed = startSessionSchema.safeParse(req.body)
     if (!parsed.success)
       return res.status(400).json({ error: parsed.error.format() })
 
     try {
-      const userId = parsed.data.userId ?? 1 // temporal
       const session = await prisma.session.create({
         data: {
           startTime: new Date(),
@@ -37,7 +37,8 @@ export default function createSessionsRouter(prisma: PrismaClient) {
   })
 
   // Finalizar sesión Pomodoro
-  router.post('/:id/end', async (req, res) => {
+  router.post('/:id/end', async (req: AuthRequest, res) => {
+    const userId = req.user!.id
     const id = Number(req.params.id)
     if (Number.isNaN(id)) return res.status(400).json({ error: 'Invalid id' })
 
@@ -46,22 +47,24 @@ export default function createSessionsRouter(prisma: PrismaClient) {
       return res.status(400).json({ error: parsed.error.format() })
 
     try {
+      const existingSession = await prisma.session.findUnique({
+        where: { id, userId },
+      })
+      if (!existingSession) {
+        return res.status(404).json({ error: 'Not found' })
+      }
+
       const endTime = new Date(parsed.data.endTime)
 
       const session = await prisma.session.update({
         where: { id },
         data: {
           endTime,
-          duration: {
-            set: Math.floor(
-              (endTime.getTime() -
-                (await prisma.session.findUnique({
-                  where: { id },
-                }))!.startTime.getTime()) /
-                1000 /
-                60
-            ),
-          },
+          duration: Math.floor(
+            (endTime.getTime() - existingSession.startTime.getTime()) /
+              1000 /
+              60
+          ),
         },
       })
 
@@ -101,8 +104,8 @@ export default function createSessionsRouter(prisma: PrismaClient) {
   })
 
   // Listar sesiones del usuario
-  router.get('/', async (req, res) => {
-    const userId = req.query.userId ? Number(req.query.userId) : 1
+  router.get('/', async (req: AuthRequest, res) => {
+    const userId = req.user!.id
     try {
       const sessions = await prisma.session.findMany({
         where: { userId },

@@ -1,13 +1,12 @@
 import { Router } from 'express'
 import { PrismaClient } from '@prisma/client'
 import { z } from 'zod'
+import { AuthRequest } from '../middleware/auth'
 
 const createTaskSchema = z.object({
   title: z.string().min(1),
   description: z.string().optional(),
   priority: z.enum(['ALTA', 'MEDIA', 'BAJA']).default('MEDIA'),
-  // por ahora permitimos enviar userId (reemplazar luego con auth)
-  userId: z.number().optional(),
 })
 
 const updateTaskSchema = z.object({
@@ -20,12 +19,12 @@ const updateTaskSchema = z.object({
 export default function createTasksRouter(prisma: PrismaClient) {
   const router = Router()
 
-  // Listar todas las tareas del usuario (si userId en query)
-  router.get('/', async (req, res) => {
+  // Listar todas las tareas del usuario
+  router.get('/', async (req: AuthRequest, res) => {
+    const userId = req.user!.id
     try {
-      const userId = req.query.userId ? Number(req.query.userId) : undefined
       const tasks = await prisma.task.findMany({
-        ...(userId ? { where: { userId } } : {}),
+        where: { userId },
         orderBy: { createdAt: 'desc' },
       })
       res.json(tasks)
@@ -36,11 +35,12 @@ export default function createTasksRouter(prisma: PrismaClient) {
   })
 
   // Obtener una tarea por id
-  router.get('/:id', async (req, res) => {
+  router.get('/:id', async (req: AuthRequest, res) => {
+    const userId = req.user!.id
     const id = Number(req.params.id)
     if (Number.isNaN(id)) return res.status(400).json({ error: 'Invalid id' })
     try {
-      const task = await prisma.task.findUnique({ where: { id } })
+      const task = await prisma.task.findUnique({ where: { id, userId } })
       if (!task) return res.status(404).json({ error: 'Not found' })
       res.json(task)
     } catch (err) {
@@ -50,14 +50,13 @@ export default function createTasksRouter(prisma: PrismaClient) {
   })
 
   // Crear tarea
-  router.post('/', async (req, res) => {
+  router.post('/', async (req: AuthRequest, res) => {
+    const userId = req.user!.id
     const parsed = createTaskSchema.safeParse(req.body)
     if (!parsed.success)
       return res.status(400).json({ error: parsed.error.format() })
 
     try {
-      // Temporal: userId por body o por defecto 1 (reemplaza cuando añadas auth)
-      const userId = parsed.data.userId ?? 1
       const task = await prisma.task.create({
         data: {
           title: parsed.data.title,
@@ -75,7 +74,8 @@ export default function createTasksRouter(prisma: PrismaClient) {
   })
 
   // Actualizar tarea
-  router.patch('/:id', async (req, res) => {
+  router.patch('/:id', async (req: AuthRequest, res) => {
+    const userId = req.user!.id
     const id = Number(req.params.id)
     if (Number.isNaN(id)) return res.status(400).json({ error: 'Invalid id' })
 
@@ -84,6 +84,14 @@ export default function createTasksRouter(prisma: PrismaClient) {
       return res.status(400).json({ error: parsed.error.format() })
 
     try {
+      // check if task belongs to user before updating
+      const existingTask = await prisma.task.findUnique({
+        where: { id, userId },
+      })
+      if (!existingTask) {
+        return res.status(404).json({ error: 'Not found' })
+      }
+
       const updated = await prisma.task.update({
         where: { id },
         data: parsed.data,
@@ -104,11 +112,20 @@ export default function createTasksRouter(prisma: PrismaClient) {
   })
 
   // Borrar tarea
-  router.delete('/:id', async (req, res) => {
+  router.delete('/:id', async (req: AuthRequest, res) => {
+    const userId = req.user!.id
     const id = Number(req.params.id)
     if (Number.isNaN(id)) return res.status(400).json({ error: 'Invalid id' })
 
     try {
+      // check if task belongs to user before deleting
+      const existingTask = await prisma.task.findUnique({
+        where: { id, userId },
+      })
+      if (!existingTask) {
+        return res.status(404).json({ error: 'Not found' })
+      }
+
       await prisma.task.delete({ where: { id } })
       res.status(204).send()
     } catch (err) {

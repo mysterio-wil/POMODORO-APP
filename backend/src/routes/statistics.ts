@@ -1,12 +1,13 @@
 import { Router } from 'express'
 import { PrismaClient } from '@prisma/client'
+import { AuthRequest } from '../middleware/auth'
 
 export default function createStatisticsRouter(prisma: PrismaClient) {
   const router = Router()
 
   // Estadísticas diarias (últimos N días)
-  router.get('/daily', async (req, res) => {
-    const userId = req.query.userId ? Number(req.query.userId) : 1
+  router.get('/daily', async (req: AuthRequest, res) => {
+    const userId = req.user!.id
     const days = req.query.days ? Number(req.query.days) : 7
 
     try {
@@ -29,8 +30,8 @@ export default function createStatisticsRouter(prisma: PrismaClient) {
   })
 
   // Resumen semanal (última semana)
-  router.get('/weekly', async (req, res) => {
-    const userId = req.query.userId ? Number(req.query.userId) : 1
+  router.get('/weekly', async (req: AuthRequest, res) => {
+    const userId = req.user!.id
 
     try {
       const today = new Date()
@@ -47,7 +48,7 @@ export default function createStatisticsRouter(prisma: PrismaClient) {
       res.json({
         totalSessions,
         totalFocusTime,
-        avgPerDay: totalFocusTime / 7,
+        avgPerDay: stats.length > 0 ? totalFocusTime / stats.length : 0,
       })
     } catch (err) {
       console.error(err)

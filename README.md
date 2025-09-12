@@ -36,16 +36,22 @@ Una aplicación Pomodoro full-stack simple para ayudarte a gestionar tu tiempo y
 
 ##  Funcionalidades
 - **Backend API**: Servidor base con Express y TypeScript.
-- **API de Tareas**: CRUD completo para la gestión de tareas.
-  - `GET /api/tasks`: Lista todas las tareas.
-  - `GET /api/tasks/:id`: Obtiene una tarea específica por su ID.
-  - `POST /api/tasks`: Crea una nueva tarea.
-  - `PATCH /api/tasks/:id`: Actualiza una tarea existente.
-  - `DELETE /api/tasks/:id`: Elimina una tarea.
-- **API de Sesiones**: Endpoints para iniciar y finalizar sesiones Pomodoro.
-  - `POST /api/sessions/start`: Inicia una nueva sesión.
-  - `POST /api/sessions/:id/end`: Finaliza una sesión existente y actualiza estadísticas.
-  - `GET /api/sessions`: Lista las sesiones de un usuario.
+- **Autenticación con JWT**: Sistema de registro y login para proteger las rutas.
+  - `POST /api/auth/register`: Crea un nuevo usuario.
+  - `POST /api/auth/login`: Inicia sesión y devuelve un token JWT.
+- **API de Tareas (Protegida)**: CRUD completo para la gestión de tareas. Las rutas requieren un token JWT.
+  - `GET /api/tasks`: Lista las tareas del usuario autenticado.
+  - `GET /api/tasks/:id`: Obtiene una tarea específica del usuario.
+  - `POST /api/tasks`: Crea una nueva tarea para el usuario.
+  - `PATCH /api/tasks/:id`: Actualiza una tarea del usuario.
+  - `DELETE /api/tasks/:id`: Elimina una tarea del usuario.
+- **API de Sesiones (Protegida)**: Endpoints para iniciar y finalizar sesiones Pomodoro. Las rutas requieren un token JWT.
+  - `POST /api/sessions/start`: Inicia una nueva sesión para el usuario.
+  - `POST /api/sessions/:id/end`: Finaliza una sesión del usuario y actualiza estadísticas.
+  - `GET /api/sessions`: Lista las sesiones del usuario.
+- **API de Estadísticas (Protegida)**: Endpoints para consultar las estadísticas del usuario.
+  - `GET /api/statistics/daily`: Devuelve las estadísticas diarias del usuario.
+  - `GET /api/statistics/weekly`: Devuelve un resumen semanal de las estadísticas del usuario.
 - **Base de Datos**: Configuración con PostgreSQL y Prisma ORM.
 - **Frontend App**: Aplicación base con React, Vite y Tailwind CSS.
 - **Conexión**: Health check entre frontend y backend.
