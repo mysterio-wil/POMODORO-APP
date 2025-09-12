@@ -20,21 +20,94 @@
 ## Índice
 * [Descripción](#descripción)
 * [Estado](#estado)
+* [Estructura del Proyecto](#estructura-del-proyecto)
+* [Dependencias Instaladas](#dependencias-instaladas)
 * [Funcionalidades](#funcionalidades)
 * [Demostración](#demostración)
 * [Instalación y uso](#instalación-y-uso)
 * [Calidad del Código](#calidad-del-código)
 * [Tecnologías](#tecnologías)
+* [Plan de Refactorización](#plan-de-refactorización)
 * [Autoría](#autoría)
 * [Licencia](#licencia)
 
-##  Descripción
+## Descripción
 Una aplicación Pomodoro full-stack simple para ayudarte a gestionar tu tiempo y mantener la concentración.
 
-##  Estado
-:construction: Proyecto en desarrollo. Versión actual: v1.0.0.
+## Estado
+:white_check_mark: **Paso 11 Completado**: Implementación de login, registro, persistencia de sesión básica y dashboard inicial.
+:construction: **Próximo Objetivo**: Refactorización de la arquitectura para mejorar la escalabilidad y mantener el código actualizado con las últimas versiones de las tecnologías.
 
-##  Funcionalidades
+## Estructura del Proyecto
+El proyecto está dividido en dos directorios principales: `backend` y `frontend`.
+
+```
+pomodoro-app/
+├── backend/              # Contiene la API RESTful
+│   ├── src/              # Código fuente del backend
+│   │   ├── controllers/  # Lógica de negocio (a ser implementada en refactor)
+│   │   ├── services/     # Servicios de aplicación (a ser implementada en refactor)
+│   │   ├── repositories/ # Interacción con la base de datos (a ser implementada en refactor)
+│   │   ├── routes/       # Definición de rutas de la API
+│   │   ├── middleware/   # Middleware para autenticación, etc.
+│   │   └── utils/        # Utilidades varias
+│   ├── prisma/           # Esquemas y migraciones de Prisma
+│   ├── package.json      # Dependencias y scripts del backend
+│   └── tsconfig.json     # Configuración de TypeScript para el backend
+├── frontend/             # Contiene la aplicación cliente (React)
+│   ├── src/              # Código fuente del frontend
+│   │   ├── components/   # Componentes reutilizables de UI
+│   │   ├── context/      # Contextos de React (ej. autenticación)
+│   │   ├── pages/        # Páginas principales de la aplicación
+│   │   ├── services/     # Lógica para interactuar con la API
+│   │   ├── assets/       # Archivos estáticos (imágenes, etc.)
+│   │   └── App.tsx       # Componente principal de la aplicación
+│   ├── public/           # Archivos estáticos públicos
+│   ├── package.json      # Dependencias y scripts del frontend
+│   ├── vite.config.ts    # Configuración de Vite
+│   └── tailwind.config.js# Configuración de Tailwind CSS
+├── package.json          # Dependencias y scripts a nivel de proyecto
+├── tsconfig.json         # Configuración de TypeScript a nivel de proyecto
+├── .gitignore            # Archivos y directorios ignorados por Git
+├── LICENSE               # Licencia del proyecto
+└── README.md             # Documentación del proyecto
+```
+
+## Dependencias Instaladas
+Las dependencias se gestionan a nivel de proyecto y dentro de cada subproyecto (`backend` y `frontend`).
+
+**Dependencias a nivel de proyecto:**
+*   `npm` (gestor de paquetes)
+*   `husky` (hooks de Git)
+*   `lint-staged` (ejecuta linters en archivos staged)
+*   `prettier` (formateador de código)
+*   `eslint` (linter de código)
+
+**Dependencias del Backend:**
+*   `express`
+*   `typescript`
+*   `prisma` (ORM)
+*   `@prisma/client`
+*   `jsonwebtoken`
+*   `bcryptjs`
+*   `dotenv`
+*   `cors`
+*   `zod` (validación de esquemas)
+
+**Dependencias del Frontend:**
+*   `react`
+*   `react-dom`
+*   `react-router-dom`
+*   `vite`
+*   `typescript`
+*   `tailwindcss`
+*   `autoprefixer`
+*   `postcss`
+*   `vitest` (framework de pruebas)
+*   `@testing-library/react`
+*   `@testing-library/jest-dom`
+
+## Funcionalidades
 - **Backend API**: Servidor base con Express y TypeScript.
 - **Autenticación con JWT**: Sistema de registro y login para proteger las rutas.
   - `POST /api/auth/register`: Crea un nuevo usuario.
@@ -65,10 +138,10 @@ Una aplicación Pomodoro full-stack simple para ayudarte a gestionar tu tiempo y
 - En la página de Registro, hay un enlace para volver a la página de Login.
 - **Persistencia de Sesión**: Si un usuario autenticado intenta acceder a `/login` o `/register`, será redirigido automáticamente a `/dashboard`. Esto asegura que la sesión persista al recargar la página y que los usuarios no puedan acceder a las páginas de autenticación si ya tienen una sesión activa.
 
-##  Demostración
+## Demostración
 _(Aquí puedes agregar capturas de pantalla o GIFs de tu aplicación)_
 
-##  Instalación y uso
+## Instalación y uso
 
 ### Prerrequisitos
 - Node.js (v18 o superior)
@@ -91,7 +164,7 @@ _(Aquí puedes agregar capturas de pantalla o GIFs de tu aplicación)_
     npm install
     cd backend && npm install
     cd ../frontend && npm install
-    cd .. 
+    cd ..
     ```
 
 3.  **Configurar la Base de Datos (Backend)**
@@ -120,7 +193,7 @@ _(Aquí puedes agregar capturas de pantalla o GIFs de tu aplicación)_
     npm run dev --prefix frontend
     ```
 
-##  Calidad del Código
+## Calidad del Código
 Este proyecto utiliza ESLint (configurado en `eslint.config.js`) para el linting y Prettier para el formateo del código, asegurando la consistencia y calidad.
 
 ### Scripts disponibles:
@@ -144,12 +217,31 @@ Para ejecutar las pruebas, usa el siguiente comando desde el directorio `fronten
 npm run test
 ```
 
-##  Tecnologías utilizadas
+## Tecnologías utilizadas
 - **Backend**: Node.js, Express, TypeScript, PostgreSQL, Prisma
 - **Frontend**: React, Vite, TypeScript, Tailwind CSS
 
-##  Autoría
+## Plan de Refactorización
+El objetivo principal de la siguiente fase es refactorizar la arquitectura del proyecto para mejorar la escalabilidad, mantenibilidad y adherencia a las mejores prácticas.
+
+**Etapas del Plan:**
+
+1.  **Frontend**:
+    *   Reorganizar la estructura de carpetas para una mejor separación de responsabilidades (ej. `routes`, `components`, `pages`, `context`, `services`).
+    *   Optimizar la gestión de estados y la lógica de componentes.
+
+2.  **Backend**:
+    *   Implementar una arquitectura de capas clara (ej. `controllers`, `services`, `repositories`, `routes`) para desacoplar la lógica de negocio de la capa de acceso a datos y la capa de presentación.
+    *   Mejorar la validación de datos y el manejo de errores.
+
+3.  **QA Manual**:
+    *   Verificar exhaustivamente las funcionalidades existentes (login, registro, dashboard) después de la refactorización para asegurar que no se introdujeron regresiones.
+
+4.  **Preparación para el Paso 12**:
+    *   Una vez completada la refactorización y la verificación, se procederá con la implementación del temporizador Pomodoro (Paso 12).
+
+## Autoría
 *Este proyecto fue creado por [mysterio-wil](https://github.com/mysterio-wil).*
 
-##  Licencia
+## Licencia
 Este proyecto está bajo la licencia [MIT](LICENSE).
