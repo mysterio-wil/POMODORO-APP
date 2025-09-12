@@ -1,24 +1,15 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
-import { useAuth } from './context/AuthContext'
+import { PrivateRoute } from './routes/PrivateRoute'
+import { PublicRoute } from './routes/PublicRoute'
 import LoginPage from './pages/Login'
 import RegisterPage from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import TasksPage from './pages/Tasks'
 
-function PrivateRoute({ children }: { children: JSX.Element }) {
-  const { token } = useAuth()
-  return token ? children : <Navigate to="/login" replace />
-}
-
-function PublicRoute({ children }: { children: JSX.Element }) {
-  const { token } = useAuth()
-  return token ? <Navigate to="/dashboard" replace /> : children
-}
-
 export default function App() {
   return (
     <Routes>
-      {/* Rutas públicas → redirigen al dashboard si ya hay token */}
+      {/* Rutas públicas */}
       <Route
         path="/login"
         element={
