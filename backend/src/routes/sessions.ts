@@ -22,6 +22,16 @@ export default function createSessionsRouter(prisma: PrismaClient) {
       return res.status(400).json({ error: parsed.error.format() })
 
     try {
+      const runningSession = await prisma.session.findFirst({
+        where: { userId, endTime: null },
+      })
+
+      if (runningSession) {
+        return res
+          .status(400)
+          .json({ error: 'An active session is already running' })
+      }
+
       const session = await prisma.session.create({
         data: {
           startTime: new Date(),
@@ -52,6 +62,10 @@ export default function createSessionsRouter(prisma: PrismaClient) {
       })
       if (!existingSession) {
         return res.status(404).json({ error: 'Not found' })
+      }
+
+      if (existingSession.endTime) {
+        return res.status(400).json({ error: 'Session already ended' })
       }
 
       const endTime = new Date(parsed.data.endTime)

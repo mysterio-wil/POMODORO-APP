@@ -2,8 +2,12 @@ import { Request, Response, NextFunction } from 'express'
 import { JwtPayload } from 'jsonwebtoken'
 import { verifyToken } from '../utils/auth'
 
+export interface UserPayload extends JwtPayload {
+  id: number
+}
+
 export interface AuthRequest extends Request {
-  user?: string | JwtPayload
+  user?: UserPayload
 }
 
 export function authMiddleware(
@@ -18,7 +22,7 @@ export function authMiddleware(
 
   const token = header.split(' ')[1]
   try {
-    const decoded = verifyToken(token)
+    const decoded = verifyToken(token) as UserPayload
     req.user = decoded
     next()
   } catch (err) {
