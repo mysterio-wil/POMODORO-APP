@@ -1,13 +1,9 @@
-export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000'
+import { apiFetch } from './api'
 
-export async function getDailyStats(userId = 1, days = 7) {
-  const r = await fetch(
-    `${API_URL}/api/statistics/daily?userId=${userId}&days=${days}`
-  )
-  return r.json()
+export async function getDailyStats(days = 7) {
+  return apiFetch(`/api/statistics/daily?days=${days}`)
 }
 
-export async function getWeeklySummary(userId = 1) {
-  const r = await fetch(`${API_URL}/api/statistics/weekly?userId=${userId}`)
-  return r.json()
+export async function getWeeklySummary() {
+  return apiFetch('/api/statistics/weekly')
 }

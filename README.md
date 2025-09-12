@@ -54,6 +54,7 @@ Una aplicación Pomodoro full-stack simple para ayudarte a gestionar tu tiempo y
   - `GET /api/statistics/weekly`: Devuelve un resumen semanal de las estadísticas del usuario.
 - **Base de Datos**: Configuración con PostgreSQL y Prisma ORM.
 - **Frontend App**: Aplicación base con React, Vite y Tailwind CSS.
+- **Integración Frontend-Backend**: El frontend consume las APIs protegidas de tareas, sesiones y estadísticas utilizando el token JWT para la autenticación.
 - **Conexión**: Health check entre frontend y backend.
 
 ##  Demostración
