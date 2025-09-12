@@ -10,12 +10,31 @@ function PrivateRoute({ children }: { children: JSX.Element }) {
   return token ? children : <Navigate to="/login" replace />
 }
 
+function PublicRoute({ children }: { children: JSX.Element }) {
+  const { token } = useAuth()
+  return token ? <Navigate to="/dashboard" replace /> : children
+}
+
 export default function App() {
   return (
     <Routes>
-      {/* Rutas públicas */}
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
+      {/* Rutas públicas → redirigen al dashboard si ya hay token */}
+      <Route
+        path="/login"
+        element={
+          <PublicRoute>
+            <LoginPage />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/register"
+        element={
+          <PublicRoute>
+            <RegisterPage />
+          </PublicRoute>
+        }
+      />
 
       {/* Rutas privadas */}
       <Route

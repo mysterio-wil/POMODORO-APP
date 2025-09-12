@@ -63,6 +63,7 @@ Una aplicación Pomodoro full-stack simple para ayudarte a gestionar tu tiempo y
 - Después de un login o registro exitoso, el usuario es redirigido al `/dashboard`.
 - Las rutas `/dashboard` y `/tasks` están protegidas y solo son accesibles si el usuario está autenticado (tiene un token JWT válido). Si no hay token, se redirige a `/login`.
 - En la página de Registro, hay un enlace para volver a la página de Login.
+- **Persistencia de Sesión**: Si un usuario autenticado intenta acceder a `/login` o `/register`, será redirigido automáticamente a `/dashboard`. Esto asegura que la sesión persista al recargar la página y que los usuarios no puedan acceder a las páginas de autenticación si ya tienen una sesión activa.
 
 ##  Demostración
 _(Aquí puedes agregar capturas de pantalla o GIFs de tu aplicación)_
