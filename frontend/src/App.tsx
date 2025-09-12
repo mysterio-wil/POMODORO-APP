@@ -1,10 +1,14 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
-import { PrivateRoute } from './routes/PrivateRoute'
-import { PublicRoute } from './routes/PublicRoute'
+
+// Páginas
 import LoginPage from './pages/Login'
 import RegisterPage from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import TasksPage from './pages/Tasks'
+
+// Rutas protegidas / públicas
+import { PrivateRoute } from './routes/PrivateRoute'
+import { PublicRoute } from './routes/PublicRoute'
 
 export default function App() {
   return (
