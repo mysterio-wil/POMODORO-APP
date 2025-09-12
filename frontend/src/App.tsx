@@ -1,49 +1,43 @@
-import { useState } from 'react'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from './context/AuthContext'
-import Dashboard from './components/Dashboard'
 import LoginPage from './pages/Login'
 import RegisterPage from './pages/Register'
+import Dashboard from './pages/Dashboard'
+import TasksPage from './pages/Tasks'
 
-function App() {
-  const { user } = useAuth()
-  const [showLogin, setShowLogin] = useState(true)
-
-  if (user) {
-    return <Dashboard />
-  }
-
-  return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold text-center mb-4">Pomodoro App</h1>
-      {showLogin ? (
-        <>
-          <LoginPage />
-          <p className="text-center mt-4">
-            ¿No tienes cuenta?{' '}
-            <button
-              onClick={() => setShowLogin(false)}
-              className="text-blue-500 hover:underline"
-            >
-              Regístrate
-            </button>
-          </p>
-        </>
-      ) : (
-        <>
-          <RegisterPage />
-          <p className="text-center mt-4">
-            ¿Ya tienes cuenta?{' '}
-            <button
-              onClick={() => setShowLogin(true)}
-              className="text-blue-500 hover:underline"
-            >
-              Inicia sesión
-            </button>
-          </p>
-        </>
-      )}
-    </div>
-  )
+function PrivateRoute({ children }: { children: JSX.Element }) {
+  const { token } = useAuth()
+  return token ? children : <Navigate to="/login" replace />
 }
 
-export default App
+export default function App() {
+  return (
+    <Routes>
+      {/* Rutas públicas */}
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+
+      {/* Rutas privadas */}
+      <Route
+        path="/dashboard"
+        element={
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/tasks"
+        element={
+          <PrivateRoute>
+            <TasksPage />
+          </PrivateRoute>
+        }
+      />
+
+      {/* Redirecciones */}
+      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="*" element={<Navigate to="/login" replace />} />
+    </Routes>
+  )
+}

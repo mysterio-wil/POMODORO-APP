@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
+import { useNavigate, Link } from 'react-router-dom'
 
 export default function LoginPage() {
   const { loginUser } = useAuth()
+  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -10,7 +12,7 @@ export default function LoginPage() {
     e.preventDefault()
     try {
       await loginUser(email, password)
-      alert('Login exitoso 🚀')
+      navigate('/dashboard') // ✅ corregido
     } catch {
       alert('Error en login')
     }
@@ -36,6 +38,14 @@ export default function LoginPage() {
         onChange={(e) => setPassword(e.target.value)}
       />
       <button className="bg-blue-500 text-white p-2 rounded">Entrar</button>
+
+      {/* ✅ Enlace a registro */}
+      <p className="text-sm text-center">
+        ¿No tienes cuenta?{' '}
+        <Link to="/register" className="text-blue-600 underline">
+          Regístrate aquí
+        </Link>
+      </p>
     </form>
   )
 }

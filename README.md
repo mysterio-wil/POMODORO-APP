@@ -53,9 +53,16 @@ Una aplicación Pomodoro full-stack simple para ayudarte a gestionar tu tiempo y
   - `GET /api/statistics/daily`: Devuelve las estadísticas diarias del usuario.
   - `GET /api/statistics/weekly`: Devuelve un resumen semanal de las estadísticas del usuario.
 - **Base de Datos**: Configuración con PostgreSQL y Prisma ORM.
-- **Frontend App**: Aplicación base con React, Vite y Tailwind CSS.
+- **Frontend App**: Aplicación base con React, Vite, Tailwind CSS y enrutamiento con React Router.
 - **Integración Frontend-Backend**: El frontend consume las APIs protegidas de tareas, sesiones y estadísticas utilizando el token JWT para la autenticación.
 - **Conexión**: Health check entre frontend y backend.
+
+## Flujo de Navegación
+- Al abrir la aplicación, se redirige automáticamente a `/login`.
+- En la página de Login, hay un enlace para ir a la página de Registro.
+- Después de un login o registro exitoso, el usuario es redirigido al `/dashboard`.
+- Las rutas `/dashboard` y `/tasks` están protegidas y solo son accesibles si el usuario está autenticado (tiene un token JWT válido). Si no hay token, se redirige a `/login`.
+- En la página de Registro, hay un enlace para volver a la página de Login.
 
 ##  Demostración
 _(Aquí puedes agregar capturas de pantalla o GIFs de tu aplicación)_

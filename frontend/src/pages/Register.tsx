@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
+import { useNavigate, Link } from 'react-router-dom'
 
 export default function RegisterPage() {
   const { registerUser } = useAuth()
+  const navigate = useNavigate()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -11,7 +13,7 @@ export default function RegisterPage() {
     e.preventDefault()
     try {
       await registerUser(name, email, password)
-      alert('Registro exitoso 🚀')
+      navigate('/dashboard') // ✅ corregido
     } catch {
       alert('Error en registro')
     }
@@ -45,6 +47,14 @@ export default function RegisterPage() {
       <button className="bg-green-500 text-white p-2 rounded">
         Crear cuenta
       </button>
+
+      {/* ✅ Enlace a login */}
+      <p className="text-sm text-center">
+        ¿Ya tienes cuenta?{' '}
+        <Link to="/login" className="text-blue-600 underline">
+          Inicia sesión
+        </Link>
+      </p>
     </form>
   )
 }
