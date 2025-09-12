@@ -1,7 +1,12 @@
 import { Navigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import type { ReactNode } from 'react' // 👈 import type
 
-export function PrivateRoute({ children }: { children: JSX.Element }) {
+interface PrivateRouteProps {
+  children: ReactNode
+}
+
+export function PrivateRoute({ children }: PrivateRouteProps) {
   const { token } = useAuth()
-  return token ? children : <Navigate to="/login" replace />
+  return token ? <>{children}</> : <Navigate to="/login" replace />
 }

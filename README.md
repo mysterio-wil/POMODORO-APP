@@ -217,6 +217,9 @@ Para ejecutar las pruebas, usa el siguiente comando desde el directorio `fronten
 npm run test
 ```
 
+### Notas de Refactorización Recientes
+- **Rutas Privadas y Públicas**: Se ha refactorizado la implementación de `PrivateRoute` y `PublicRoute` para un tipado más estricto, utilizando `ReactNode` con `import type` para soportar `verbatimModuleSyntax` y mejorar la compatibilidad con las últimas versiones de TypeScript y React.
+
 ## Tecnologías utilizadas
 - **Backend**: Node.js, Express, TypeScript, PostgreSQL, Prisma
 - **Frontend**: React, Vite, TypeScript, Tailwind CSS

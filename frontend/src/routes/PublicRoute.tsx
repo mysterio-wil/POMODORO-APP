@@ -1,7 +1,12 @@
 import { Navigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import type { ReactNode } from 'react' // 👈 import type
 
-export function PublicRoute({ children }: { children: JSX.Element }) {
+interface PublicRouteProps {
+  children: ReactNode
+}
+
+export function PublicRoute({ children }: PublicRouteProps) {
   const { token } = useAuth()
-  return token ? <Navigate to="/dashboard" replace /> : children
+  return token ? <Navigate to="/dashboard" replace /> : <>{children}</>
 }
