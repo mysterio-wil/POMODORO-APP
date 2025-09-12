@@ -42,6 +42,10 @@ Una aplicación Pomodoro full-stack simple para ayudarte a gestionar tu tiempo y
   - `POST /api/tasks`: Crea una nueva tarea.
   - `PATCH /api/tasks/:id`: Actualiza una tarea existente.
   - `DELETE /api/tasks/:id`: Elimina una tarea.
+- **API de Sesiones**: Endpoints para iniciar y finalizar sesiones Pomodoro.
+  - `POST /api/sessions/start`: Inicia una nueva sesión.
+  - `POST /api/sessions/:id/end`: Finaliza una sesión existente y actualiza estadísticas.
+  - `GET /api/sessions`: Lista las sesiones de un usuario.
 - **Base de Datos**: Configuración con PostgreSQL y Prisma ORM.
 - **Frontend App**: Aplicación base con React, Vite y Tailwind CSS.
 - **Conexión**: Health check entre frontend y backend.
