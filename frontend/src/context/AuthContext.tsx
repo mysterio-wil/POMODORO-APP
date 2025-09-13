@@ -1,11 +1,14 @@
-import { createContext, useContext, useState, useEffect } from 'react'
-import type { ReactNode } from 'react'
-import axios from 'axios'
-
-// Tipos de la respuesta de login/registro
-interface AuthResponse {
-  token: string
-}
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  type ReactNode,
+} from 'react'
+import {
+  loginUser as loginService,
+  registerUser as registerService,
+} from '../services/authService'
 
 interface AuthContextType {
   token: string | null
@@ -16,68 +19,32 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType)
 
-interface AuthProviderProps {
-  children: ReactNode
-}
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [token, setToken] = useState<string | null>(null)
 
-export function AuthProvider({ children }: AuthProviderProps) {
-  const [token, setToken] = useState<string | null>(() =>
-    localStorage.getItem('auth_token')
-  )
-
-  // Sincroniza token con Axios
+  // ✅ Al iniciar, revisamos si hay token en localStorage
   useEffect(() => {
-    if (token) {
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`
-    } else {
-      delete api.defaults.headers.common['Authorization']
+    const savedToken = localStorage.getItem('auth_token')
+    if (savedToken) {
+      setToken(savedToken)
     }
-  }, [token])
+  }, [])
 
-  // Login
   async function loginUser(email: string, password: string) {
-    try {
-      const { data } = await api.post<AuthResponse>('/auth/login', {
-        email,
-        password,
-      })
-      localStorage.setItem('auth_token', data.token)
-      setToken(data.token)
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        throw new Error(
-          error.response?.data?.error || error.message || 'Error en login'
-        )
-      }
-      throw new Error('An unexpected error occurred during login.')
-    }
+    const data = await loginService(email, password)
+    localStorage.setItem('auth_token', data.token)
+    setToken(data.token)
   }
 
-  // Registro
   async function registerUser(name: string, email: string, password: string) {
-    try {
-      const { data } = await api.post<AuthResponse>('/auth/register', {
-        name,
-        email,
-        password,
-      })
-      localStorage.setItem('auth_token', data.token)
-      setToken(data.token)
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        throw new Error(
-          error.response?.data?.error || error.message || 'Error en registro'
-        )
-      }
-      throw new Error('An unexpected error occurred during registration.')
-    }
+    const data = await registerService(name, email, password)
+    localStorage.setItem('auth_token', data.token)
+    setToken(data.token)
   }
 
-  // Logout
   function logout() {
     localStorage.removeItem('auth_token')
     setToken(null)
-    delete api.defaults.headers.common['Authorization']
   }
 
   return (
@@ -87,9 +54,4 @@ export function AuthProvider({ children }: AuthProviderProps) {
   )
 }
 
-// Hook personalizado
-export const useAuth = () => {
-  const context = useContext(AuthContext)
-  if (!context) throw new Error('useAuth debe usarse dentro de AuthProvider')
-  return context
-}
+export const useAuth = () => useContext(AuthContext)
