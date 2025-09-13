@@ -1,23 +1,26 @@
-import { getToken } from './auth'
+import axios from 'axios'
 
+// URL base de la API
 export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000'
 
-export async function apiFetch(endpoint: string, options: RequestInit = {}) {
-  const token = getToken()
-  const headers: HeadersInit = {
-    'Content-Type': 'application/json',
-    ...(options.headers || {}),
+const api = axios.create({
+  baseURL: `${API_URL}/api`,
+  headers: { 'Content-Type': 'application/json' },
+})
+
+// Interceptor request: agrega token si existe
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('auth_token')
+  if (token && config.headers) {
+    config.headers.Authorization = `Bearer ${token}`
   }
+  return config
+})
 
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`
-  }
+// Interceptor response: maneja errores globales
+api.interceptors.response.use(
+  (response) => response,
+  (error) => Promise.reject(error)
+)
 
-  const res = await fetch(`${API_URL}${endpoint}`, { ...options, headers })
-
-  if (!res.ok) {
-    throw new Error(`Error ${res.status}: ${await res.text()}`)
-  }
-
-  return res.json()
-}
+export default api

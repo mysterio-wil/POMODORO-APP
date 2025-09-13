@@ -220,6 +220,37 @@ npm run test
 ### Notas de Refactorización Recientes
 - **Rutas Privadas y Públicas**: Se ha refactorizado la implementación de `PrivateRoute` y `PublicRoute` para un tipado más estricto, utilizando `ReactNode` con `import type` para soportar `verbatimModuleSyntax` y mejorar la compatibilidad con las últimas versiones de TypeScript y React.
 
+### 🚀 Refactorización del Servicio de Tareas (Frontend)
+
+Se ha llevado a cabo una refactorización significativa en `frontend/src/services/tasks.ts` para mejorar la escalabilidad y robustez de la aplicación:
+
+- **Cliente API Estructurado**: Se ha reemplazado el uso directo de `apiFetch` por una instancia `api` dedicada (probablemente Axios), lo que permite una interacción más consistente y robusta con el backend.
+- **Tipado Estricto con Interfaz `Task`**: Se introdujo una interfaz `Task` para definir la estructura de los objetos de tarea, mejorando la seguridad de tipos y la claridad del código en todo el frontend.
+- **Operaciones CRUD Completas**: El servicio ahora soporta todas las operaciones CRUD (Crear, Leer, Actualizar, Eliminar) para las tareas, con funciones dedicadas:
+    - `getTasks()`: Obtiene todas las tareas del usuario.
+    - `createTask(title, description?)`: Crea una nueva tarea, ahora con soporte opcional para descripción.
+    - `updateTask(id, updates)`: Permite la actualización parcial de una tarea existente.
+    - `deleteTask(id)`: Elimina una tarea específica.
+- **Mejora en la Manejo de Datos**: Todas las funciones ahora devuelven promesas con tipos explícitos (`Promise<Task[]>`, `Promise<Task>`, `Promise<void>`), lo que facilita el manejo de datos y errores en los componentes de React.
+
+### 🔒 Mejora en la Gestión de Autenticación (Frontend)
+
+Se ha implementado un sistema de autenticación más robusto y escalable en `frontend/src/context/AuthContext.tsx` y `frontend/src/services/api.ts`:
+
+- **Contexto de Autenticación Centralizado**: Se utiliza el Context API de React para gestionar el estado de autenticación (token, funciones de login, registro, logout) de manera global, facilitando el acceso y la actualización en toda la aplicación.
+- **Persistencia de Sesión Segura**: El token de autenticación se almacena en `localStorage` para mantener la sesión del usuario, y se sincroniza automáticamente con las cabeceras de Axios.
+- **Interceptor de Axios para Autenticación**: La instancia de Axios (`api`) incluye un interceptor de solicitudes que adjunta automáticamente el token JWT a todas las peticiones salientes, centralizando la lógica de autenticación y eliminando la necesidad de añadirlo manualmente en cada llamada.
+- **Tipado Estricto**: Se han definido interfaces (`AuthResponse`, `AuthContextType`) para asegurar la seguridad de tipos en los datos de autenticación y en el contexto.
+- **Manejo de Errores Consistente**: Las funciones de login y registro incluyen un manejo de errores básico pero extensible, que puede ser mejorado para ofrecer una experiencia de usuario más detallada.
+
+### 🔹 Actualización de Axios y Tipado en Frontend
+
+- Con la actualización a **axios@1.12.1**, los tipos `AxiosRequestConfig` y `AxiosResponse` ya no se exportan como miembros nombrados.  
+- Para evitar errores de TypeScript, se decidió:
+  - Eliminar el tipado explícito en los interceptores (`config`, `response`, `error`) y dejar que TypeScript infiera los tipos automáticamente.
+  - Esto garantiza que la aplicación compile correctamente en strict mode y se mantenga compatible con futuras actualizaciones de Axios.  
+- Futuras mejoras: cuando los tipos públicos de Axios 1.x se estabilicen, se puede refactorizar `src/services/api.ts` para usar tipado más estricto.
+
 ## Tecnologías utilizadas
 - **Backend**: Node.js, Express, TypeScript, PostgreSQL, Prisma
 - **Frontend**: React, Vite, TypeScript, Tailwind CSS
