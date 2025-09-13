@@ -274,6 +274,10 @@ El objetivo principal de la siguiente fase es refactorizar la arquitectura del p
 4.  **Preparación para el Paso 12**:
     *   Una vez completada la refactorización y la verificación, se procederá con la implementación del temporizador Pomodoro (Paso 12).
 
+## Documentación Adicional
+
+*   [Buenas prácticas con Axios + TypeScript](docs/axios-typescript.md)
+
 ## Autoría
 *Este proyecto fue creado por [mysterio-wil](https://github.com/mysterio-wil).*
 
