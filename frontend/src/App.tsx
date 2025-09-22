@@ -1,37 +1,20 @@
+// src/App.tsx
 import { Routes, Route, Navigate } from 'react-router-dom'
-
-// Páginas
-import LoginPage from './pages/Login'
-import RegisterPage from './pages/Register'
+import Login from './pages/Login'
+import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
-import TasksPage from './pages/Tasks'
+import { useAuth } from './context/AuthContext'
 
-// Rutas protegidas / públicas
-import { PrivateRoute } from './routes/PrivateRoute'
-import { PublicRoute } from './routes/PublicRoute'
+function PrivateRoute({ children }: { children: JSX.Element }) {
+  const { user } = useAuth()
+  return user ? children : <Navigate to="/login" replace />
+}
 
 export default function App() {
   return (
     <Routes>
-      {/* Rutas públicas */}
-      <Route
-        path="/login"
-        element={
-          <PublicRoute>
-            <LoginPage />
-          </PublicRoute>
-        }
-      />
-      <Route
-        path="/register"
-        element={
-          <PublicRoute>
-            <RegisterPage />
-          </PublicRoute>
-        }
-      />
-
-      {/* Rutas privadas */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
       <Route
         path="/dashboard"
         element={
@@ -40,17 +23,6 @@ export default function App() {
           </PrivateRoute>
         }
       />
-      <Route
-        path="/tasks"
-        element={
-          <PrivateRoute>
-            <TasksPage />
-          </PrivateRoute>
-        }
-      />
-
-      {/* Redirecciones */}
-      <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   )
