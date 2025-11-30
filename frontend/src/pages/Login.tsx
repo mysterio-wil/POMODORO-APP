@@ -10,16 +10,20 @@ export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError(null)
+    setLoading(true)
     try {
       await login(email, password)
       navigate('/dashboard')
     } catch (err: unknown) {
       if (err instanceof Error) setError(err.message)
       else setError('Error desconocido al iniciar sesión')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -27,7 +31,13 @@ export default function Login() {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md bg-white p-6 rounded-xl shadow-md">
         <h1 className="text-2xl font-bold mb-4 text-center">Iniciar Sesión</h1>
-        {error && <p className="text-red-500 mb-4">{error}</p>}
+
+        {error && (
+          <div className="mb-4 bg-red-100 text-red-700 px-4 py-2 rounded">
+            {error}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="email"
@@ -36,7 +46,8 @@ export default function Login() {
               setEmail(e.target.value)
             }
             placeholder="Correo electrónico"
-            className="w-full border px-3 py-2 rounded"
+            aria-label="Correo electrónico"
+            className="w-full border px-3 py-2 rounded focus:ring focus:ring-blue-300"
             required
           />
           <input
@@ -46,16 +57,23 @@ export default function Login() {
               setPassword(e.target.value)
             }
             placeholder="Contraseña"
-            className="w-full border px-3 py-2 rounded"
+            aria-label="Contraseña"
+            className="w-full border px-3 py-2 rounded focus:ring focus:ring-blue-300"
             required
           />
           <button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+            disabled={loading}
+            className={`w-full px-4 py-2 rounded text-white ${
+              loading
+                ? 'bg-blue-300 cursor-not-allowed'
+                : 'bg-blue-500 hover:bg-blue-600'
+            }`}
           >
-            Entrar
+            {loading ? 'Cargando...' : 'Entrar'}
           </button>
         </form>
+
         <p className="mt-4 text-sm text-center">
           ¿No tienes cuenta?{' '}
           <Link to="/register" className="text-blue-500 hover:underline">

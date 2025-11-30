@@ -11,16 +11,20 @@ export default function Register() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError(null)
+    setLoading(true)
     try {
       await register(name, email, password)
       navigate('/dashboard')
     } catch (err: unknown) {
       if (err instanceof Error) setError(err.message)
       else setError('Error desconocido al registrar')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -28,7 +32,13 @@ export default function Register() {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md bg-white p-6 rounded-xl shadow-md">
         <h1 className="text-2xl font-bold mb-4 text-center">Registro</h1>
-        {error && <p className="text-red-500 mb-4">{error}</p>}
+
+        {error && (
+          <div className="mb-4 bg-red-100 text-red-700 px-4 py-2 rounded">
+            {error}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
@@ -37,7 +47,8 @@ export default function Register() {
               setName(e.target.value)
             }
             placeholder="Nombre"
-            className="w-full border px-3 py-2 rounded"
+            aria-label="Nombre"
+            className="w-full border px-3 py-2 rounded focus:ring focus:ring-green-300"
             required
           />
           <input
@@ -47,7 +58,8 @@ export default function Register() {
               setEmail(e.target.value)
             }
             placeholder="Correo electrónico"
-            className="w-full border px-3 py-2 rounded"
+            aria-label="Correo electrónico"
+            className="w-full border px-3 py-2 rounded focus:ring focus:ring-green-300"
             required
           />
           <input
@@ -57,16 +69,23 @@ export default function Register() {
               setPassword(e.target.value)
             }
             placeholder="Contraseña"
-            className="w-full border px-3 py-2 rounded"
+            aria-label="Contraseña"
+            className="w-full border px-3 py-2 rounded focus:ring focus:ring-green-300"
             required
           />
           <button
             type="submit"
-            className="w-full bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
+            disabled={loading}
+            className={`w-full px-4 py-2 rounded text-white ${
+              loading
+                ? 'bg-green-300 cursor-not-allowed'
+                : 'bg-green-500 hover:bg-green-600'
+            }`}
           >
-            Registrarse
+            {loading ? 'Cargando...' : 'Registrarse'}
           </button>
         </form>
+
         <p className="mt-4 text-sm text-center">
           ¿Ya tienes cuenta?{' '}
           <Link to="/login" className="text-blue-500 hover:underline">
