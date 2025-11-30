@@ -1,27 +1,30 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
-import { PrismaClient } from '@prisma/client'
-import createTasksRouter from './routes/tasks'
-import createSessionsRouter from './routes/sessions'
-import createStatisticsRouter from './routes/statistics'
-import createAuthRouter from './routes/auth'
-import { authMiddleware } from './middleware/auth'
+import authRouter from './routes/auth'
+import tasksRouter from './routes/tasks'
+import sessionsRouter from './routes/sessions'
+import statisticsRouter from './routes/statistics'
+import { errorHandler } from './errors/errorHandler'
 
 dotenv.config()
 const app = express()
-const prisma = new PrismaClient()
 
+// Middleware
 app.use(cors())
 app.use(express.json())
 
+// Health check
 app.get('/api/health', (_req, res) => res.json({ ok: true }))
 
-app.use('/api/auth', createAuthRouter(prisma))
+// Routes
+app.use('/api/auth', authRouter)
+app.use('/api/tasks', tasksRouter)
+app.use('/api/sessions', sessionsRouter)
+app.use('/api/statistics', statisticsRouter)
 
-app.use('/api/tasks', authMiddleware, createTasksRouter(prisma))
-app.use('/api/sessions', authMiddleware, createSessionsRouter(prisma))
-app.use('/api/statistics', authMiddleware, createStatisticsRouter(prisma))
+// Error handler (must be last)
+app.use(errorHandler)
 
 const PORT = process.env.PORT || 4000
 app.listen(PORT, () =>
