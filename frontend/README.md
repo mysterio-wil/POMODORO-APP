@@ -1,69 +1,65 @@
-# React + TypeScript + Vite
+# Frontend de la Aplicación Pomodoro
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este directorio contiene el código fuente de la aplicación cliente, desarrollada con React, Vite y TypeScript.
 
-Currently, two official plugins are available:
+## Descripción General
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+El frontend es una Single Page Application (SPA) que permite a los usuarios gestionar sus tareas y sesiones de Pomodoro. Se comunica con la API del backend para la autenticación, la gestión de datos y la sincronización del estado.
 
-## Expanding the ESLint configuration
+## Tecnologías Utilizadas
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **React**: Biblioteca para construir interfaces de usuario.
+- **Vite**: Herramienta de desarrollo frontend moderna y rápida.
+- **TypeScript**: Superset de JavaScript que añade tipado estático.
+- **Tailwind CSS**: Framework de CSS "utility-first" para un diseño rápido y personalizado.
+- **React Router**: Para la gestión de rutas en la aplicación.
+- **Axios**: Cliente HTTP para realizar peticiones a la API.
+- **React Context**: Para la gestión del estado de autenticación.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Estructura de Carpetas
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+frontend/
+├── src/
+│   ├── assets/         # Archivos estáticos (imágenes, etc.)
+│   ├── components/     # Componentes de UI reutilizables
+│   ├── context/        # Contextos de React (ej. AuthContext)
+│   ├── pages/          # Componentes de página (Login, Register, Dashboard, etc.)
+│   ├── routes/         # Lógica de enrutamiento (rutas públicas y privadas)
+│   ├── services/       # Servicios para interactuar con la API (authService, taskService)
+│   ├── App.tsx         # Componente raíz de la aplicación
+│   └── main.tsx        # Punto de entrada de la aplicación
+├── public/             # Archivos públicos
+├── package.json        # Dependencias y scripts
+└── vite.config.ts      # Configuración de Vite
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Scripts Disponibles
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Desde el directorio `frontend/`, puedes ejecutar los siguientes scripts:
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- `npm install`: Instala las dependencias del proyecto.
+- `npm run dev`: Inicia el servidor de desarrollo de Vite.
+- `npm run build`: Compila la aplicación para producción.
+- `npm run lint`: Ejecuta ESLint para analizar el código.
+- `npm run test`: Ejecuta las pruebas con Vitest.
+
+## Instalación y Uso
+
+1.  **Navega al directorio del frontend**:
+    ```bash
+    cd frontend
+    ```
+
+2.  **Instala las dependencias**:
+    ```bash
+    npm install
+    ```
+
+3.  **Inicia el servidor de desarrollo**:
+    Asegúrate de que el backend esté en ejecución.
+    ```bash
+    npm run dev
+    ```
+
+La aplicación estará disponible en `http://localhost:5173` (o el puerto que Vite asigne).
