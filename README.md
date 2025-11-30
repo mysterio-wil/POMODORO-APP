@@ -243,6 +243,15 @@ Se ha implementado un sistema de autenticación más robusto y escalable en `fro
 - **Tipado Estricto**: Se han definido interfaces (`AuthResponse`, `AuthContextType`) para asegurar la seguridad de tipos en los datos de autenticación y en el contexto.
 - **Manejo de Errores Consistente**: Las funciones de login y registro incluyen un manejo de errores básico pero extensible, que puede ser mejorado para ofrecer una experiencia de usuario más detallada.
 
+### 🔐 Implementación de Autenticación (Frontend)
+
+Se ha implementado un sistema de autenticación robusto en el frontend, utilizando React Context y servicios dedicados para gestionar el estado del usuario.
+
+- **`AuthContext.tsx`**: Proporciona un contexto global para la autenticación, gestionando el estado del usuario y el token JWT. Incluye funciones para `login`, `register` y `logout`, y persiste la sesión en `localStorage`.
+- **`authService.ts`**: Centraliza la comunicación con la API de autenticación del backend, con funciones para el registro (`registerUser`) y el inicio de sesión (`loginUser`).
+- **Páginas de `Login` y `Register`**: Se han creado componentes de página dedicados con formularios para que los usuarios puedan iniciar sesión o registrarse en la aplicación.
+- **Integración con API**: El `AuthContext` configura automáticamente la instancia de `api` (Axios) con el token de autorización, asegurando que todas las solicitudes a rutas protegidas estén autenticadas.
+
 ### 🔹 Actualización de Axios y Tipado en Frontend
 
 - Con la actualización a **axios@1.12.1**, los tipos `AxiosRequestConfig` y `AxiosResponse` ya no se exportan como miembros nombrados.  
