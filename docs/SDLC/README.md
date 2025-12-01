@@ -211,12 +211,12 @@ Esta documentación debe actualizarse:
 
 ## 📞 Contacto
 
-**Desarrollador**: mysterio-wil  
-**Repositorio**: [GitHub - pomodoro-app](https://github.com/mysterio-wil/pomodoro-app)  
+**Desarrollador**: wigsdev  
+**Repositorio**: [GitHub - pomodoro-app](https://github.com/wigsdev/pomodoro-app)  
 **Documentación**: `/docs/SDLC/`
 
 ---
 
 **Última Actualización**: 2025-11-29  
 **Versión de Documentación**: 1.0  
-**Mantenido por**: mysterio-wil
+**Mantenido por**: wigsdev

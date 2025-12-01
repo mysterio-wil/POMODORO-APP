@@ -35,8 +35,8 @@ Desarrollar una aplicación web Pomodoro completa que ayude a los usuarios a ges
 
 | Rol | Nombre/Descripción | Responsabilidades |
 |-----|-------------------|-------------------|
-| **Product Owner** | mysterio-wil | Definir requisitos, priorizar features |
-| **Desarrollador Full-Stack** | mysterio-wil | Implementación backend y frontend |
+| **Product Owner** | wigsdev | Definir requisitos, priorizar features |
+| **Desarrollador Full-Stack** | wigsdev | Implementación backend y frontend |
 | **Usuario Final** | Profesionales y estudiantes | Usar la aplicación para gestión de tiempo |
 
 ---
