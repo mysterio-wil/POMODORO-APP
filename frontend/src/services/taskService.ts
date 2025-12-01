@@ -1,24 +1,21 @@
-import { Task } from './tasks'
+import api from './api'
+import type { Task, CreateTaskDTO, UpdateTaskDTO } from '../types/task.types'
 
-export async function getTasks() {
-  const { data } = await api.get('/tasks')
+export async function getTasks(): Promise<Task[]> {
+  const { data } = await api.get<Task[]>('/tasks')
   return data
 }
 
-export async function createTask(task: {
-  title: string
-  description?: string
-}) {
-  const { data } = await api.post('/tasks', task)
+export async function createTask(taskData: CreateTaskDTO): Promise<Task> {
+  const { data } = await api.post<Task>('/tasks', taskData)
   return data
 }
 
-export async function updateTask(id: string, updates: Partial<Task>) {
-  const { data } = await api.put(`/tasks/${id}`, updates)
+export async function updateTask(id: string, updates: UpdateTaskDTO): Promise<Task> {
+  const { data } = await api.patch<Task>(`/tasks/${id}`, updates)
   return data
 }
 
-export async function deleteTask(id: string) {
-  const { data } = await api.delete(`/tasks/${id}`)
-  return data
+export async function deleteTask(id: string): Promise<void> {
+  await api.delete(`/tasks/${id}`)
 }
