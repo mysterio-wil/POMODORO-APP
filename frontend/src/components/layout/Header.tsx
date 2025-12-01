@@ -1,48 +1,46 @@
-import { useAuth } from '../../context/AuthContext'
-import { useNavigate } from 'react-router-dom'
-
 export default function Header() {
-    const { user, logout } = useAuth()
-    const navigate = useNavigate()
-
-    const handleLogout = () => {
-        logout()
-        navigate('/login')
-    }
-
     return (
-        <header className="bg-transparent py-4">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <header className="py-4 px-4 md:px-8">
+            <div className="max-w-[640px] mx-auto">
                 <div className="flex justify-between items-center">
-                    <div className="flex items-center gap-4">
-                        <h1 className="text-xl md:text-2xl font-bold text-white">
-                            🍅 Pomofocus
-                        </h1>
-                        <nav className="hidden md:flex gap-2">
-                            <button
-                                onClick={() => navigate('/dashboard')}
-                                className="px-3 py-1.5 text-sm text-white/90 hover:text-white transition-colors"
-                            >
-                                📊 Report
-                            </button>
-                            <button
-                                onClick={() => navigate('/tasks')}
-                                className="px-3 py-1.5 text-sm text-white/90 hover:text-white transition-colors"
-                            >
-                                ⚙️ Setting
-                            </button>
-                        </nav>
+                    {/* Logo */}
+                    <div className="flex items-center gap-2">
+                        <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
+                            <span className="text-red-500 text-sm">✓</span>
+                        </div>
+                        <h1 className="text-white text-xl font-bold">Pomofocus</h1>
                     </div>
 
-                    <div className="flex items-center gap-2 md:gap-4">
-                        <span className="text-sm md:text-base text-white/90 hidden sm:inline">
-                            {user?.name}
-                        </span>
-                        <button
-                            onClick={handleLogout}
-                            className="px-3 py-1.5 md:px-4 md:py-2 text-sm md:text-base bg-white/10 backdrop-blur-sm text-white rounded-lg hover:bg-white/20 transition-colors"
-                        >
-                            Sign out
+                    {/* Right Buttons */}
+                    <div className="flex items-center gap-2">
+                        {/* Desktop buttons */}
+                        <button className="hidden md:flex items-center gap-1 px-3 py-1.5 text-white/90 hover:text-white text-sm transition-colors">
+                            <span>📊</span>
+                            <span>Report</span>
+                        </button>
+                        <button className="hidden md:flex items-center gap-1 px-3 py-1.5 text-white/90 hover:text-white text-sm transition-colors">
+                            <span>⚙️</span>
+                            <span>Setting</span>
+                        </button>
+                        <button className="hidden md:flex items-center gap-1 px-3 py-1.5 text-white/90 hover:text-white text-sm transition-colors">
+                            <span>👤</span>
+                            <span>Sign In</span>
+                        </button>
+
+                        {/* Mobile icons only */}
+                        <button className="md:hidden p-2 text-white/90 hover:text-white">
+                            📊
+                        </button>
+                        <button className="md:hidden p-2 text-white/90 hover:text-white">
+                            ⚙️
+                        </button>
+                        <button className="md:hidden p-2 text-white/90 hover:text-white">
+                            👤
+                        </button>
+
+                        {/* Menu button (all screens) */}
+                        <button className="p-2 text-white/90 hover:text-white">
+                            ⋮
                         </button>
                     </div>
                 </div>

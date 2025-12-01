@@ -1,51 +1,38 @@
-import { useEffect } from 'react'
-import { usePomodoro } from '../../hooks/usePomodoro'
+import { useState } from 'react'
+
+type TimerMode = 'pomodoro' | 'shortBreak' | 'longBreak'
 
 export default function PomodoroTimer() {
-    const {
-        mode,
-        status,
-        formatTime,
-        completedSessions,
-        start,
-        pause,
-        switchMode,
-    } = usePomodoro()
-
-    // Solicitar permiso para notificaciones
-    useEffect(() => {
-        if ('Notification' in window && Notification.permission === 'default') {
-            Notification.requestPermission()
-        }
-    }, [])
+    const [mode, setMode] = useState<TimerMode>('pomodoro')
+    const [isRunning, setIsRunning] = useState(false)
 
     return (
-        <div className="w-full max-w-xl mx-auto">
-            <div className="text-center space-y-6 md:space-y-8">
+        <div className="w-full max-w-[480px] mx-auto px-4">
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 md:p-8">
                 {/* Mode Tabs */}
-                <div className="flex justify-center gap-2">
+                <div className="flex justify-center gap-2 mb-8">
                     <button
-                        onClick={() => switchMode('work')}
-                        className={`px-4 py-2 md:px-6 md:py-3 text-sm md:text-base font-medium rounded-lg transition-all ${mode === 'work'
-                                ? 'bg-white/20 backdrop-blur-sm text-white'
+                        onClick={() => setMode('pomodoro')}
+                        className={`px-3 py-2 md:px-4 md:py-2 text-sm md:text-base font-medium rounded transition-all ${mode === 'pomodoro'
+                                ? 'bg-white/20 text-white'
                                 : 'text-white/70 hover:text-white'
                             }`}
                     >
                         Pomodoro
                     </button>
                     <button
-                        onClick={() => switchMode('shortBreak')}
-                        className={`px-4 py-2 md:px-6 md:py-3 text-sm md:text-base font-medium rounded-lg transition-all ${mode === 'shortBreak'
-                                ? 'bg-white/20 backdrop-blur-sm text-white'
+                        onClick={() => setMode('shortBreak')}
+                        className={`px-3 py-2 md:px-4 md:py-2 text-sm md:text-base font-medium rounded transition-all ${mode === 'shortBreak'
+                                ? 'bg-white/20 text-white'
                                 : 'text-white/70 hover:text-white'
                             }`}
                     >
                         Short Break
                     </button>
                     <button
-                        onClick={() => switchMode('longBreak')}
-                        className={`px-4 py-2 md:px-6 md:py-3 text-sm md:text-base font-medium rounded-lg transition-all ${mode === 'longBreak'
-                                ? 'bg-white/20 backdrop-blur-sm text-white'
+                        onClick={() => setMode('longBreak')}
+                        className={`px-3 py-2 md:px-4 md:py-2 text-sm md:text-base font-medium rounded transition-all ${mode === 'longBreak'
+                                ? 'bg-white/20 text-white'
                                 : 'text-white/70 hover:text-white'
                             }`}
                     >
@@ -53,40 +40,28 @@ export default function PomodoroTimer() {
                     </button>
                 </div>
 
-                {/* Timer Card */}
-                <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 md:p-12 shadow-2xl">
-                    {/* Timer Display */}
-                    <div className="text-8xl md:text-9xl font-bold text-white font-mono tracking-tight">
-                        {formatTime()}
-                    </div>
-
-                    {/* Start/Pause Button */}
-                    <div className="mt-8">
-                        {status === 'idle' || status === 'paused' ? (
-                            <button
-                                onClick={start}
-                                className="w-full md:w-auto px-12 py-4 md:px-16 md:py-5 text-xl md:text-2xl font-bold bg-white text-red-500 rounded-lg hover:bg-gray-100 transition-all shadow-lg"
-                            >
-                                {status === 'paused' ? 'RESUME' : 'START'}
-                            </button>
-                        ) : (
-                            <button
-                                onClick={pause}
-                                className="w-full md:w-auto px-12 py-4 md:px-16 md:py-5 text-xl md:text-2xl font-bold bg-white text-red-500 rounded-lg hover:bg-gray-100 transition-all shadow-lg"
-                            >
-                                PAUSE
-                            </button>
-                        )}
+                {/* Timer Display */}
+                <div className="text-center mb-8">
+                    <div className="text-7xl md:text-8xl lg:text-9xl font-bold text-white font-mono">
+                        22:23
                     </div>
                 </div>
 
-                {/* Session Counter */}
-                <div className="text-white/90 text-base md:text-lg">
-                    #{completedSessions + 1}
+                {/* Start Button */}
+                <div className="flex justify-center mb-6">
+                    <button
+                        onClick={() => setIsRunning(!isRunning)}
+                        className="w-full md:w-auto px-16 py-4 bg-white text-[#d95550] text-xl font-bold rounded-lg hover:bg-gray-100 transition-all shadow-lg"
+                    >
+                        {isRunning ? 'PAUSE' : 'START'}
+                    </button>
                 </div>
-                <div className="text-white/70 text-sm md:text-base">
-                    Time to focus!
-                </div>
+            </div>
+
+            {/* Session Info */}
+            <div className="text-center mt-6 text-white/90">
+                <div className="text-lg font-medium">#1</div>
+                <div className="text-sm mt-1">Time to focus!</div>
             </div>
         </div>
     )
