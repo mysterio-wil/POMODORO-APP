@@ -14,10 +14,10 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Hamburger Button - Solo visible en móvil */}
+      {/* Hamburger Button - Visible en todas las pantallas */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="md:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-gray-800 text-white hover:bg-gray-700 transition-colors"
+        className="fixed top-4 left-4 z-50 p-2 rounded-lg bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-colors"
         aria-label="Toggle menu"
       >
         <svg
@@ -44,65 +44,45 @@ export default function Sidebar() {
         </svg>
       </button>
 
-      {/* Overlay - Solo visible cuando sidebar está abierto en móvil */}
+      {/* Overlay - Solo visible cuando sidebar está abierto */}
       {isOpen && (
         <div
-          className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+          className="fixed inset-0 bg-black/50 z-40 backdrop-blur-sm"
           onClick={closeSidebar}
           aria-hidden="true"
         />
       )}
 
-      {/* Sidebar */}
+      {/* Sidebar - Siempre oculto por defecto, se abre con hamburger */}
       <aside
         className={`
-          fixed md:static
+          fixed
           top-0 left-0
-          h-full md:h-screen
+          h-full
           w-64
-          bg-gray-800
-          shadow-lg
+          bg-white
+          shadow-2xl
           transform transition-transform duration-300 ease-in-out
-          z-40
-          ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+          z-50
+          ${isOpen ? 'translate-x-0' : '-translate-x-full'}
         `}
-        style={{
-          backgroundColor: '#1f2937',
-          minHeight: '100vh',
-        }}
       >
-        <nav className="py-8 mt-12 md:mt-0">
-          <ul className="space-y-2 px-4" style={{ listStyle: 'none', padding: '0 1rem' }}>
+        <nav className="py-8 mt-12">
+          <ul className="space-y-2 px-4" style={{ listStyle: 'none' }}>
             {navItems.map((item) => (
-              <li key={item.path} style={{ marginBottom: '0.5rem' }}>
+              <li key={item.path}>
                 <NavLink
                   to={item.path}
                   onClick={closeSidebar}
                   className={({ isActive }) =>
-                    `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                      isActive
-                        ? 'bg-blue-600 text-white'
-                        : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                    `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive
+                      ? 'bg-blue-600 text-white'
+                      : 'text-gray-700 hover:bg-gray-100'
                     }`
                   }
-                  style={({ isActive }) => ({
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.75rem',
-                    padding: '0.75rem 1rem',
-                    borderRadius: '0.5rem',
-                    textDecoration: 'none',
-                    transition: 'all 0.2s',
-                    backgroundColor: isActive ? '#2563eb' : 'transparent',
-                    color: isActive ? '#ffffff' : '#d1d5db',
-                  })}
                 >
-                  <span className="text-xl" style={{ fontSize: '1.25rem' }}>
-                    {item.icon}
-                  </span>
-                  <span className="font-medium" style={{ fontWeight: 500 }}>
-                    {item.label}
-                  </span>
+                  <span className="text-xl">{item.icon}</span>
+                  <span className="font-medium">{item.label}</span>
                 </NavLink>
               </li>
             ))}
