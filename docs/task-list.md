@@ -27,14 +27,14 @@
 - [x] Actualizar index.ts con error handler
 - [x] Probar todas las rutas manualmente
 
-### Fase 2: Refactorización de Arquitectura Frontend 🔄
-- [/] Crear estructura de carpetas mejorada
+### Fase 2: Refactorización de Arquitectura Frontend ✅
+- [x] Crear estructura de carpetas mejorada
 - [x] Crear tipos TypeScript
 - [x] Crear hooks personalizados
 - [x] Crear componentes comunes
 - [x] Crear componentes de layout
 - [x] Actualizar servicios con tipos
-- [ ] Refactorizar páginas
+- [x] Refactorizar páginas
 
 ### Fase 3: QA y Testing ⏳
 - [ ] Configurar Vitest para backend
