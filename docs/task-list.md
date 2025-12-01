@@ -32,7 +32,7 @@
 - [x] Crear tipos TypeScript
 - [x] Crear hooks personalizados
 - [x] Crear componentes comunes
-- [ ] Crear componentes de layout
+- [x] Crear componentes de layout
 - [ ] Actualizar servicios con tipos
 - [ ] Refactorizar páginas
 
