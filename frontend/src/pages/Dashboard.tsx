@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import Layout from '../components/layout/Layout'
 import Card from '../components/common/Card'
+import PomodoroTimer from '../components/pomodoro/PomodoroTimer'
 
 export default function Dashboard() {
   const { user } = useAuth()
@@ -20,6 +21,9 @@ export default function Dashboard() {
     <Layout>
       <div className="space-y-6">
         <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+
+        {/* Pomodoro Timer */}
+        <PomodoroTimer />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <Card title="Welcome Back!">
