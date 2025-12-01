@@ -28,12 +28,12 @@ export default function Login() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md bg-white p-6 rounded-xl shadow-md">
-        <h1 className="text-2xl font-bold mb-4 text-center">Iniciar Sesión</h1>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
+      <div className="w-full max-w-md bg-white p-6 md:p-8 rounded-xl shadow-md">
+        <h1 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-center">Iniciar Sesión</h1>
 
         {error && (
-          <div className="mb-4 bg-red-100 text-red-700 px-4 py-2 rounded">
+          <div className="mb-4 bg-red-100 text-red-700 px-4 py-2 rounded text-sm md:text-base">
             {error}
           </div>
         )}
@@ -47,7 +47,7 @@ export default function Login() {
             }
             placeholder="Correo electrónico"
             aria-label="Correo electrónico"
-            className="w-full border px-3 py-2 rounded focus:ring focus:ring-blue-300"
+            className="w-full border px-3 py-2 md:py-2.5 text-base rounded focus:ring focus:ring-blue-300"
             required
           />
           <input
@@ -58,23 +58,22 @@ export default function Login() {
             }
             placeholder="Contraseña"
             aria-label="Contraseña"
-            className="w-full border px-3 py-2 rounded focus:ring focus:ring-blue-300"
+            className="w-full border px-3 py-2 md:py-2.5 text-base rounded focus:ring focus:ring-blue-300"
             required
           />
           <button
             type="submit"
             disabled={loading}
-            className={`w-full px-4 py-2 rounded text-white ${
-              loading
+            className={`w-full px-4 py-2 md:py-2.5 text-base rounded text-white ${loading
                 ? 'bg-blue-300 cursor-not-allowed'
                 : 'bg-blue-500 hover:bg-blue-600'
-            }`}
+              }`}
           >
             {loading ? 'Cargando...' : 'Entrar'}
           </button>
         </form>
 
-        <p className="mt-4 text-sm text-center">
+        <p className="mt-4 text-sm md:text-base text-center">
           ¿No tienes cuenta?{' '}
           <Link to="/register" className="text-blue-500 hover:underline">
             Regístrate aquí
