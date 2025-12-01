@@ -27,11 +27,11 @@
 - [x] Actualizar index.ts con error handler
 - [x] Probar todas las rutas manualmente
 
-### Fase 2: Refactorización de Arquitectura Frontend ⏳
-- [ ] Crear estructura de carpetas mejorada
-- [ ] Crear tipos TypeScript
-- [ ] Crear hooks personalizados
-- [ ] Crear componentes comunes
+### Fase 2: Refactorización de Arquitectura Frontend 🔄
+- [/] Crear estructura de carpetas mejorada
+- [x] Crear tipos TypeScript
+- [x] Crear hooks personalizados
+- [x] Crear componentes comunes
 - [ ] Crear componentes de layout
 - [ ] Actualizar servicios con tipos
 - [ ] Refactorizar páginas
