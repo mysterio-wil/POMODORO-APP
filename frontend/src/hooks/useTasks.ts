@@ -32,6 +32,38 @@ export function useTasks() {
             const message = err instanceof Error ? err.message : 'Error creating task'
             setError(message)
             throw err
+        } finally {
+            setLoading(false)
+        }
+    }, [])
+
+    const updateTask = useCallback(async (id: number, data: UpdateTaskDTO) => {
+        setLoading(true)
+        setError(null)
+        try {
+            const updated = await taskService.updateTask(id.toString(), data)
+            setTasks((prev) => prev.map((t) => (t.id === id ? updated : t)))
+            return updated
+        } catch (err) {
+            const message = err instanceof Error ? err.message : 'Error updating task'
+            setError(message)
+            throw err
+        } finally {
+            setLoading(false)
+        }
+    }, [])
+
+    const deleteTask = useCallback(async (id: number) => {
+        setLoading(true)
+        setError(null)
+        try {
+            await taskService.deleteTask(id.toString())
+            setTasks((prev) => prev.filter((t) => t.id !== id))
+        } catch (err) {
+            const message = err instanceof Error ? err.message : 'Error deleting task'
+            setError(message)
+            throw err
+        } finally {
             setLoading(false)
         }
     }, [])
