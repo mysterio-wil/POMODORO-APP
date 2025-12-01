@@ -33,7 +33,7 @@
 - [x] Crear hooks personalizados
 - [x] Crear componentes comunes
 - [x] Crear componentes de layout
-- [ ] Actualizar servicios con tipos
+- [x] Actualizar servicios con tipos
 - [ ] Refactorizar páginas
 
 ### Fase 3: QA y Testing ⏳
