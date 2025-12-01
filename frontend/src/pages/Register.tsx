@@ -29,12 +29,12 @@ export default function Register() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md bg-white p-6 rounded-xl shadow-md">
-        <h1 className="text-2xl font-bold mb-4 text-center">Registro</h1>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
+      <div className="w-full max-w-md bg-white p-6 md:p-8 rounded-xl shadow-md">
+        <h1 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-center">Registro</h1>
 
         {error && (
-          <div className="mb-4 bg-red-100 text-red-700 px-4 py-2 rounded">
+          <div className="mb-4 bg-red-100 text-red-700 px-4 py-2 rounded text-sm md:text-base">
             {error}
           </div>
         )}
@@ -46,9 +46,9 @@ export default function Register() {
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setName(e.target.value)
             }
-            placeholder="Nombre"
-            aria-label="Nombre"
-            className="w-full border px-3 py-2 rounded focus:ring focus:ring-green-300"
+            placeholder="Nombre completo"
+            aria-label="Nombre completo"
+            className="w-full border px-3 py-2 md:py-2.5 text-base rounded focus:ring focus:ring-blue-300"
             required
           />
           <input
@@ -59,7 +59,7 @@ export default function Register() {
             }
             placeholder="Correo electrónico"
             aria-label="Correo electrónico"
-            className="w-full border px-3 py-2 rounded focus:ring focus:ring-green-300"
+            className="w-full border px-3 py-2 md:py-2.5 text-base rounded focus:ring focus:ring-blue-300"
             required
           />
           <input
@@ -70,23 +70,22 @@ export default function Register() {
             }
             placeholder="Contraseña"
             aria-label="Contraseña"
-            className="w-full border px-3 py-2 rounded focus:ring focus:ring-green-300"
+            className="w-full border px-3 py-2 md:py-2.5 text-base rounded focus:ring focus:ring-blue-300"
             required
           />
           <button
             type="submit"
             disabled={loading}
-            className={`w-full px-4 py-2 rounded text-white ${
-              loading
-                ? 'bg-green-300 cursor-not-allowed'
-                : 'bg-green-500 hover:bg-green-600'
-            }`}
+            className={`w-full px-4 py-2 md:py-2.5 text-base rounded text-white ${loading
+                ? 'bg-blue-300 cursor-not-allowed'
+                : 'bg-blue-500 hover:bg-blue-600'
+              }`}
           >
             {loading ? 'Cargando...' : 'Registrarse'}
           </button>
         </form>
 
-        <p className="mt-4 text-sm text-center">
+        <p className="mt-4 text-sm md:text-base text-center">
           ¿Ya tienes cuenta?{' '}
           <Link to="/login" className="text-blue-500 hover:underline">
             Inicia sesión aquí
