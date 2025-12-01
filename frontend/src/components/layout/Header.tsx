@@ -1,6 +1,5 @@
 import { useAuth } from '../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
-import Button from '../common/Button'
 
 export default function Header() {
     const { user, logout } = useAuth()
