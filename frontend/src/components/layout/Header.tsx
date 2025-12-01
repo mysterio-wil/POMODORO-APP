@@ -11,13 +11,27 @@ export default function Header() {
     }
 
     return (
-        <header className="bg-transparent">
+        <header className="bg-transparent py-4">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between items-center h-16">
-                    <div className="flex items-center ml-14">
+                <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-4">
                         <h1 className="text-xl md:text-2xl font-bold text-white">
-                            🍅 Pomodoro
+                            🍅 Pomofocus
                         </h1>
+                        <nav className="hidden md:flex gap-2">
+                            <button
+                                onClick={() => navigate('/dashboard')}
+                                className="px-3 py-1.5 text-sm text-white/90 hover:text-white transition-colors"
+                            >
+                                📊 Report
+                            </button>
+                            <button
+                                onClick={() => navigate('/tasks')}
+                                className="px-3 py-1.5 text-sm text-white/90 hover:text-white transition-colors"
+                            >
+                                ⚙️ Setting
+                            </button>
+                        </nav>
                     </div>
 
                     <div className="flex items-center gap-2 md:gap-4">
@@ -28,7 +42,7 @@ export default function Header() {
                             onClick={handleLogout}
                             className="px-3 py-1.5 md:px-4 md:py-2 text-sm md:text-base bg-white/10 backdrop-blur-sm text-white rounded-lg hover:bg-white/20 transition-colors"
                         >
-                            Logout
+                            Sign out
                         </button>
                     </div>
                 </div>
