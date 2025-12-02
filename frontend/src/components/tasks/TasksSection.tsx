@@ -34,7 +34,7 @@ export default function TasksSection() {
                         autoFocus
                     />
                     <div className="flex gap-3">
-                        <button className="px-5 py-2.5 bg-white/20 hover:bg-white/30 text-white rounded-md font-medium transition-colors">
+                        <button className="px-5 py-2.5 bg-white text-[#d95550] hover:bg-gray-50 rounded-md font-bold transition-colors">
                             Save
                         </button>
                         <button

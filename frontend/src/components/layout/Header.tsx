@@ -11,34 +11,27 @@ export default function Header() {
                         <h1 className="text-white text-xl md:text-2xl font-bold tracking-tight">Pomofocus</h1>
                     </div>
 
-                    {/* Right Buttons */}
+                    {/* Right Buttons - Desktop: texto + ícono, Móvil: solo íconos */}
                     <div className="flex items-center gap-2">
-                        {/* Desktop buttons */}
-                        <button className="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-md text-white text-sm font-medium transition-all">
+                        {/* Report Button */}
+                        <button className="flex items-center gap-1.5 px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-md text-white text-sm font-medium transition-all">
                             <span>📊</span>
-                            <span>Report</span>
+                            <span className="hidden lg:inline">Report</span>
                         </button>
-                        <button className="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-md text-white text-sm font-medium transition-all">
+
+                        {/* Setting Button */}
+                        <button className="flex items-center gap-1.5 px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-md text-white text-sm font-medium transition-all">
                             <span>⚙️</span>
-                            <span>Setting</span>
+                            <span className="hidden lg:inline">Setting</span>
                         </button>
-                        <button className="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-md text-white text-sm font-medium transition-all">
+
+                        {/* Sign In Button */}
+                        <button className="flex items-center gap-1.5 px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-md text-white text-sm font-medium transition-all">
                             <span>👤</span>
-                            <span>Sign In</span>
+                            <span className="hidden lg:inline">Sign In</span>
                         </button>
 
-                        {/* Mobile icons only */}
-                        <button className="md:hidden p-2 bg-white/10 hover:bg-white/20 rounded-md text-white transition-all">
-                            📊
-                        </button>
-                        <button className="md:hidden p-2 bg-white/10 hover:bg-white/20 rounded-md text-white transition-all">
-                            ⚙️
-                        </button>
-                        <button className="md:hidden p-2 bg-white/10 hover:bg-white/20 rounded-md text-white transition-all">
-                            👤
-                        </button>
-
-                        {/* Menu button (all screens) */}
+                        {/* Menu button */}
                         <button className="p-2 bg-white/10 hover:bg-white/20 rounded-md text-white transition-all">
                             ⋮
                         </button>
